@@ -5,7 +5,8 @@ COPY startup /opt/startup
 COPY hostingstart.html /home/site/wwwroot/hostingstart.html
 COPY sshd_config /etc/ssh/
 
-RUN npm install -g pm2 \
+RUN npm install -g npm@6 \
+     && npm install -g pm2 \
      && mkdir -p /home/LogFiles \
      && echo "root:Docker!" | chpasswd \
      && echo "cd /home" >> /etc/bash.bashrc \
