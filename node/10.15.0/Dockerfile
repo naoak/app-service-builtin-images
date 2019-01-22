@@ -3,15 +3,17 @@ MAINTAINER Azure App Services Container Images <appsvc-images@microsoft.com>
 
 COPY startup /opt/startup
 COPY hostingstart.html /home/site/wwwroot/hostingstart.html
-COPY sshd_config /etc/ssh/
 
 RUN npm install -g pm2 \
      && mkdir -p /home/LogFiles \
      && echo "root:Docker!" | chpasswd \
      && echo "cd /home" >> /etc/bash.bashrc \
      && apt update \
-     && apt install -y --no-install-recommends openssh-server vim curl wget tcptraceroute \
-     && cd /opt/startup \
+     && apt install -y --no-install-recommends openssh-server vim curl wget tcptraceroute
+
+COPY sshd_config /etc/ssh/
+
+RUN cd /opt/startup \
      && npm install \
      && chmod 755 /opt/startup/init_container.sh
 
